@@ -26,3 +26,7 @@ jobs:
         run: npm run typecheck --workspace=packages/data
       - name: Data unit tests
         run: npm run test --workspace=packages/data
+      - name: Presentation typecheck
+        run: npm run typecheck --workspace=packages/presentation
+      - name: Presentation unit tests
+        run: npm run test --workspace=packages/presentation

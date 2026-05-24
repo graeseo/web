@@ -10,6 +10,7 @@ export interface ScenarioSignal {
 export interface ScenarioCard {
   kind: ScenarioDirection
   title: string
+  impact: string
   oneLine: string
   why: string
   signals: ScenarioSignal[]

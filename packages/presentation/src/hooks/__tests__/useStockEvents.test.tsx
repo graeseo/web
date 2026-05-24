@@ -10,6 +10,7 @@ const makeEvent = (overrides: Partial<StockEvent> = {}): StockEvent => ({
   id: 'evt-1',
   title: '테슬라 주주총회',
   date: '5/27',
+  day: '화',
   daysLeft: 3,
   stock: 'tsla',
   concept: '머스크 연간 계획 공개',
@@ -48,7 +49,7 @@ const macroEvent = makeEvent({ id: 'macro-1', stock: null, title: 'FOMC 6월 회
 const makeWrapper = (repo: StockEventRepository) =>
   ({ children }: { children: React.ReactNode }) =>
     React.createElement(RepositoryContext.Provider, {
-      value: { stockEventRepository: repo, scenarioRepository: null as never },
+      value: { stockEventRepository: repo, scenarioRepository: null as never, marketTopicRepository: null as never, stockRepository: null as never },
       children,
     })
 

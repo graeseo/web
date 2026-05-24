@@ -1,10 +1,49 @@
-import type { StockEvent, Scenario } from '@graeseo/domain'
+import type { StockEvent, Scenario, Stock, MarketTopic, StockNarrative } from '@graeseo/domain'
+
+export const STATIC_STOCKS: Stock[] = [
+  { key: 'tsla', ticker: 'TSLA', name: '테슬라', mark: 'T', priceUSD: 312.40, changePercent: -1.84 },
+  { key: 'pltr', ticker: 'PLTR', name: '팔란티어', mark: 'P', priceUSD: 148.20, changePercent: 2.21 },
+]
+
+export const STOCK_ORDER: Stock['key'][] = ['tsla', 'pltr']
+
+export const STATIC_NARRATIVES: StockNarrative[] = [
+  {
+    stock: 'tsla',
+    today: '로보택시 약속만으론 이제 안 먹혀요. 시장은 5/27 주총에서 도시 확장이 "숫자"로 나오는지를 보고 있어요. 올해 두 번째 중국 인도량 쇼크도 겹쳐서, 머스크의 "내년이면 됩니다" 파워가 가장 약해진 시점이에요.',
+  },
+  {
+    stock: 'pltr',
+    today: 'EV/매출 30배는 부담스럽지만, 분기마다 매출이 +100% 뛰면 그게 정당화돼요. 6/5 AIPCon에서 신규 메가캡 고객 몇 곳이 발표되느냐에 따라 다음 분기 분위기가 갈려요. 정부 부문 의존도가 다시 부각되면 재평가 위험도 있어요.',
+  },
+]
+
+export const STATIC_MARKET_TOPIC: MarketTopic = {
+  oneLine: '"한 번 더 인하" 베팅이 다시 시장을 끌어올리는 중',
+  headline: '한 번 더 인하',
+  why: '지난주 PCE가 예상보다 0.1%p 낮게 나왔고, 그래서 9월 금리 인하 확률이 다시 72%까지 올라왔어요. 어제 장 10년물 금리도 -8bp, AI 종목들이 다 환호했죠.',
+  implications: [
+    {
+      stock: 'tsla',
+      verdict: '약한 호재',
+      strength: 1,
+      note: '금리가 내리면 성장주가 좋아해요. 근데 다음 주 주총 발표가 지금은 더 큰 변수예요.',
+    },
+    {
+      stock: 'pltr',
+      verdict: '강한 호재',
+      strength: 2,
+      note: 'AI 종목 중에서 금리에 제일 민감해요. 인하 확률이 80%를 넘으면 갭업도 있을 수 있어요.',
+    },
+  ],
+}
 
 export const STATIC_EVENTS: StockEvent[] = [
   {
     id: '테슬라 주주총회',
     title: '테슬라 주주총회',
     date: '5/27',
+    day: '화',
     daysLeft: 3,
     stock: 'tsla',
     concept: '머스크가 한 해 계획을 공개하는 자리예요. 올해는 로보택시 도시 확장이 어디까지 가는지가 키예요.',
@@ -15,6 +54,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: '美 4월 PCE 발표',
     title: '美 4월 PCE 발표',
     date: '5/30',
+    day: '금',
     daysLeft: 6,
     stock: null,
     concept: '연준이 가장 자주 보는 미국 물가 지표예요.',
@@ -25,6 +65,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: '테슬라 5월 중국 인도량',
     title: '테슬라 5월 중국 인도량',
     date: '6/03',
+    day: '화',
     daysLeft: 10,
     stock: 'tsla',
     concept: '중국 시장에서 한 달 동안 차를 몇 대 팔았는지 매주 알 수 있어요.',
@@ -35,6 +76,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: 'AIPCon 5 (AIP 컨퍼런스)',
     title: 'AIPCon 5 (AIP 컨퍼런스)',
     date: '6/05',
+    day: '목',
     daysLeft: 12,
     stock: 'pltr',
     concept: '팔란티어가 신규 AI 고객사를 발표하는 연례 행사예요.',
@@ -45,6 +87,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: 'FOMC 6월 회의 결과',
     title: 'FOMC 6월 회의 결과',
     date: '6/12',
+    day: '목',
     daysLeft: 19,
     stock: null,
     concept: '미 연준이 금리를 어떻게 가져갈지, 연말 전망 점도표까지 한꺼번에 공개돼요.',
@@ -55,6 +98,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: '6월 옵션 만기 (트리플 위칭)',
     title: '6월 옵션 만기 (트리플 위칭)',
     date: '6/18',
+    day: '수',
     daysLeft: 25,
     stock: null,
     concept: '주식·지수·옵션이 같은 날 만기되는 분기 이벤트예요.',
@@ -65,6 +109,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: '팔란티어 Q2 실적 발표',
     title: '팔란티어 Q2 실적 발표',
     date: '7/22',
+    day: '화',
     daysLeft: 59,
     stock: 'pltr',
     concept: '분기 매출·EPS·다음 분기 가이던스가 장 마감 후 동시 공개돼요.',
@@ -75,6 +120,7 @@ export const STATIC_EVENTS: StockEvent[] = [
     id: '테슬라 Q2 실적 발표',
     title: '테슬라 Q2 실적 발표',
     date: '7/23',
+    day: '수',
     daysLeft: 60,
     stock: 'tsla',
     concept: '분기 실적이 장 마감 후 공개돼요. 인도량은 이미 알고 있어서 마진이 진짜 변수예요.',
@@ -90,6 +136,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+5~8%',
         title: '로보택시 10개 도시 추가 발표',
         oneLine: '머스크가 구체적인 도시 리스트와 일정을 들고 나오는 경우예요.',
         why: '작년 6월에 "로보택시 6개 도시" 발표가 나오자마자 5거래일 동안 +7.2%를 마감했어요. 올해는 사전 마케팅 톤이 더 강해요.',
@@ -102,6 +149,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−2~+2%',
         title: 'FSD v14 로드맵 + 기존 가이던스 재확인',
         oneLine: '컨센서스 그대로예요. 새 뉴스는 적고 기존 약속을 다시 굳히는 경우예요.',
         why: '주총 공시에 신규 안건이 없어요. 단기 트레이더는 차익 실현, 장기 보유자는 별 반응이 없는 패턴이에요.',
@@ -114,6 +162,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−3~−5%',
         title: '잡담 위주, 새 발표 부재',
         oneLine: '머스크가 정치·AI 일반론으로 시간을 채우는 경우예요.',
         why: '2023년 6월에 같은 패턴이 나오자 직후 5거래일 평균 −4.2%였어요.',
@@ -132,6 +181,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+8~12%',
         title: '메가캡 신규 고객 3개+ 공개',
         oneLine: '컨퍼런스 본 세션에서 포춘500 신규 고객이 여러 곳 발표되는 경우예요.',
         why: '작년 AIPCon 4에서 신규 2개사 발표 후 1주일 +14%였어요. 올해는 등록자가 60% 늘었어요.',
@@ -144,6 +194,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−3~+3%',
         title: '기존 고객 케이스 스터디 위주',
         oneLine: '신규 발표는 적고 기존 고객의 확장 사례로 채워지는 경우예요.',
         why: '"성장이 둔화됐다"는 내러티브에 빌미를 줄 수 있어요.',
@@ -156,6 +207,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−4~−6%',
         title: '국방·정부 비중이 다시 부각',
         oneLine: '엔터프라이즈보다 정부 의존도가 헤드라인을 차지하는 경우예요.',
         why: '"성장주가 아닌 방산주" 재평가 위험이 있어요.',
@@ -174,6 +226,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+4~7%',
         title: '전년比 플러스 전환',
         oneLine: '주간 등록 수가 회복돼서 전년 동월보다 늘어나는 경우예요.',
         why: '4월 충격 이후 처음 보는 반등 신호예요. "중국에서 끝났다" 내러티브가 한 번에 무너질 수 있어요.',
@@ -186,6 +239,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−2~+2%',
         title: '소폭 감소, 큰 흔들림 없음',
         oneLine: '전년比 -3% 이내 수준에서 마무리되는 경우예요.',
         why: '시장이 이미 부진을 가격에 어느 정도 반영했어요.',
@@ -198,6 +252,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−6~−9%',
         title: '두 자릿수 감소 충격',
         oneLine: '전년比 -8% 이상으로 4월 쇼크가 이어지는 경우예요.',
         why: '중국 의존도 30%인 테슬라에 대한 구조적 의문이 굳어져요.',
@@ -216,6 +271,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+2~4%',
         title: '컨센서스 하회 — 인하 확률 점프',
         oneLine: 'PCE가 2.5% 이하로 나와 9월 인하 확률이 80%를 돌파하는 경우예요.',
         why: '금리 하락은 성장주에 직접 호재예요.',
@@ -228,6 +284,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−1~+1%',
         title: '컨센서스 부합 — 시장은 주총 모드',
         oneLine: 'PCE가 예상대로 나와 시장 관심이 5/27 주총으로 쏠리는 경우예요.',
         why: 'PCE 임팩트는 사라지고 종목별 이벤트가 다시 주도해요.',
@@ -240,6 +297,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−3~−5%',
         title: 'PCE 상회 — 인하 지연 우려',
         oneLine: 'PCE가 2.8% 이상으로 나와 9월 인하 시나리오가 흔들리는 경우예요.',
         why: '고밸류 성장주가 먼저 매도되는 패턴이에요.',
@@ -258,6 +316,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+4~7%',
         title: '인하 베팅 확산, AI 종목 강세',
         oneLine: 'PCE 하회로 인하 확률이 점프하며 AI 종목 중 가장 민감하게 반응하는 경우예요.',
         why: '팔란티어는 AI 인프라주 중에서도 금리 베타가 가장 높아요.',
@@ -270,6 +329,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−1~+1%',
         title: '예상대로, AIPCon 대기 모드',
         oneLine: 'PCE 임팩트가 짧고 시장 시선이 6/5 AIPCon으로 빠르게 이동하는 경우예요.',
         why: '단일 매크로 이벤트보다 종목 이벤트가 더 큰 변수예요.',
@@ -282,6 +342,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−5~−8%',
         title: 'PCE 상회, 밸류 부담 부각',
         oneLine: '인하 지연 우려가 커지며 EV/매출 30배 밸류가 다시 도마 위에 올라오는 경우예요.',
         why: '팔란티어는 고밸류 대표주라 금리 상승에 가장 먼저 매도돼요.',
@@ -300,6 +361,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+3~6%',
         title: '연내 2회 인하 시그널',
         oneLine: '점도표가 연말까지 2회 인하를 가리키면서 위험자산 전체가 랠리하는 경우예요.',
         why: '광범위한 성장주 강세 흐름에 테슬라도 자연스럽게 편승해요.',
@@ -312,6 +374,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−2~+2%',
         title: '1회 인하 + 모호한 가이던스',
         oneLine: '시장 컨센서스대로 1회 인하 시그널만 나와 큰 방향성이 없는 경우예요.',
         why: '테슬라는 회사 이벤트(인도량·실적)가 더 큰 변수예요.',
@@ -324,6 +387,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−4~−7%',
         title: '매파 점도표 — 인하 지연 시사',
         oneLine: '점도표가 연내 인하 없음을 시사하며 성장주가 광범위하게 매도되는 경우예요.',
         why: '테슬라처럼 고밸류 성장주에 직접 타격이에요.',
@@ -342,6 +406,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+5~9%',
         title: '도브 시그널 — AI 종목 강세',
         oneLine: '2회 인하 시그널로 위험자산이 광범위하게 랠리하면서 AI 대표주가 앞장서는 경우예요.',
         why: '팔란티어는 금리 베타가 높아 더 큰 변동성으로 반응해요.',
@@ -354,6 +419,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−2~+3%',
         title: '1회 인하 + 모호 — Q2 실적 대기',
         oneLine: 'FOMC가 컨센서스대로 끝나고 시장 관심이 7/22 Q2 실적으로 이동하는 경우예요.',
         why: 'AIPCon 다음 가장 큰 이벤트가 Q2 실적이라 그쪽으로 빠르게 시선이 이동해요.',
@@ -366,6 +432,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−7~−12%',
         title: '매파 — 고밸류 직격',
         oneLine: '인하 지연 시그널로 EV/매출 30배 밸류가 한 번에 흔들리는 경우예요.',
         why: '팔란티어는 금리 상승 환경에서 가장 먼저 매도되는 종류예요.',
@@ -384,6 +451,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+2~4%',
         title: '감마 스퀴즈, 오후 마감 급등',
         oneLine: '대규모 콜 포지션이 만기를 향해 가속되며 마감 30분에 강한 매수세가 나오는 경우예요.',
         why: '테슬라는 옵션 거래량이 큰 종목이라 감마 스퀴즈에 민감해요.',
@@ -396,6 +464,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−1~+1%',
         title: '평이한 만기 — 약간 출렁임',
         oneLine: '큰 포지션 충돌이 없어서 일반적 만기 흐름으로 끝나는 경우예요.',
         why: '대부분의 분기 만기는 이렇게 지나가요.',
@@ -408,6 +477,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−3~−5%',
         title: '풋 만기 압력, 마감 약세',
         oneLine: '대규모 풋 헤지가 청산되며 마감 30분에 매도 압력이 집중되는 경우예요.',
         why: '단기적이고 펀더멘털과 무관해요.',
@@ -426,6 +496,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+3~5%',
         title: '감마 압력 — 단기 매수',
         oneLine: '단기 콜 포지션이 만기로 쏠려서 마감 직전 매수 급증이 나오는 경우예요.',
         why: '팔란티어도 옵션 거래량이 늘고 있어 영향을 받아요.',
@@ -438,6 +509,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−1~+1%',
         title: '큰 변동 없는 만기',
         oneLine: '옵션 만기가 조용히 지나가고 AIPCon 후속 이벤트에 더 집중되는 경우예요.',
         why: 'AIPCon 직후라 만기 효과보다 컨퍼런스 영향이 더 커요.',
@@ -450,6 +522,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−2~−4%',
         title: '풋 청산 압력',
         oneLine: '대형 풋 헤지가 청산되며 일시적 매도 압력이 나오는 경우예요.',
         why: '단기 트레이더가 흔들릴 수 있지만 일시적이에요.',
@@ -468,6 +541,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+12~18%',
         title: 'AI 매출 +110%, 가이던스 상향',
         oneLine: '미국 상업 부문이 +110%를 넘기고 다음 분기 가이던스가 상향되는 경우예요.',
         why: '"성장이 둔화될 거다" 우려가 한 번에 무너져요.',
@@ -480,6 +554,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−3~+3%',
         title: '매출 +95~105%, 가이던스 유지',
         oneLine: '컨센서스를 살짝 상회하지만 가이던스 상향은 없는 무난한 케이스예요.',
         why: '"좋긴 한데 정당화 부족" 평가가 나와요.',
@@ -492,9 +567,10 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−15~−22%',
         title: '성장률 둔화 + 정부 의존 부각',
         oneLine: 'AI 매출 성장이 +90% 아래로 떨어지거나 정부 부문 비중이 다시 부각되는 경우예요.',
-        why: 'EV/매출 30배가 한 번에 흔들려요. 갭다운이 가장 큰 시나리오예요.',
+        why: 'EV/매출 30배가 한 번에 흔들려요.',
         signals: [
           { title: '미국 상업', description: '+90% 미만' },
           { title: '신규 계약', description: '국방 위주, 민간 신규 1~2건' },
@@ -510,6 +586,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
     cards: [
       {
         kind: 'up',
+        impact: '+8~12%',
         title: '마진 18% + FSD 사용자 가속',
         oneLine: '자동차 GAAP 마진이 18%를 넘고 FSD 월간 활성 사용자도 빠르게 늘어나는 경우예요.',
         why: '"가격 인하 + 마진 압박" 우려가 한 번에 해소돼요.',
@@ -522,9 +599,10 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'flat',
+        impact: '−3~+3%',
         title: '마진 17% 방어, 기존 가이던스',
         oneLine: '마진이 17%로 컨센서스 수준이고 큰 신규 발표가 없는 경우예요.',
-        why: '예상대로의 무난한 실적이에요. 큰 매수도 매도도 없는 횡보 패턴이 일반적.',
+        why: '예상대로의 무난한 실적이에요.',
         signals: [
           { title: '자동차 마진', description: '16.5 ~ 17.5%' },
           { title: 'FSD MAU', description: '40만 명 전후' },
@@ -534,6 +612,7 @@ export const STATIC_SCENARIOS: Scenario[] = [
       },
       {
         kind: 'down',
+        impact: '−8~−14%',
         title: '마진 16% 하회 + FSD 둔화',
         oneLine: '가격 인하 누적으로 마진이 16% 아래로 떨어지고 FSD 모멘텀도 약화되는 경우예요.',
         why: '"성장 스토리가 한 번에 흔들린다"가 메인 내러티브로 자리잡아요.',

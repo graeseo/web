@@ -11,6 +11,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
   cards: [
     {
       kind: 'up',
+      impact: '+5~8%',
       title: '긍정적',
       oneLine: '주가 상승',
       why: '머스크 발언',
@@ -19,6 +20,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
     },
     {
       kind: 'flat',
+      impact: '−2~+2%',
       title: '중립',
       oneLine: '보합',
       why: '불확실',
@@ -27,6 +29,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
     },
     {
       kind: 'down',
+      impact: '−3~−5%',
       title: '부정적',
       oneLine: '주가 하락',
       why: '악재 발언',
@@ -63,7 +66,7 @@ const pltrScenario = makeScenario({ eventId: 'AIPCon 5', stock: 'pltr' })
 const makeWrapper = (repo: ScenarioRepository) =>
   ({ children }: { children: React.ReactNode }) =>
     React.createElement(RepositoryContext.Provider, {
-      value: { stockEventRepository: null as never, scenarioRepository: repo },
+      value: { stockEventRepository: null as never, scenarioRepository: repo, marketTopicRepository: null as never, stockRepository: null as never },
       children,
     })
 

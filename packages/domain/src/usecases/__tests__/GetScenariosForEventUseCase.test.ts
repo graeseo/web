@@ -10,6 +10,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
   cards: [
     {
       kind: 'up',
+      impact: '+5~8%',
       title: '로보택시 10개 도시 추가 발표',
       oneLine: '머스크가 구체적인 도시 리스트와 일정을 들고 나오는 경우',
       why: '작년 발표 후 5거래일 +7.2%',
@@ -18,6 +19,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
     },
     {
       kind: 'flat',
+      impact: '−2~+2%',
       title: 'FSD v14 로드맵 재확인',
       oneLine: '컨센서스 그대로, 새 뉴스 없음',
       why: '단기 트레이더 차익 실현 패턴',
@@ -26,6 +28,7 @@ const makeScenario = (overrides: Partial<Scenario> = {}): Scenario => ({
     },
     {
       kind: 'down',
+      impact: '−3~−5%',
       title: '잡담 위주, 발표 부재',
       oneLine: '머스크가 정치·AI 일반론으로 시간을 채우는 경우',
       why: '2023년 동일 패턴 시 5거래일 평균 -4.2%',

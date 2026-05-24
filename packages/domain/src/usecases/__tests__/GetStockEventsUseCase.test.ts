@@ -7,6 +7,7 @@ const makeEvent = (overrides: Partial<StockEvent> = {}): StockEvent => ({
   id: 'evt-1',
   title: '테슬라 주주총회',
   date: '5/27',
+  day: '화',
   daysLeft: 3,
   stock: 'tsla',
   concept: '머스크가 한 해 계획을 공개하는 자리',

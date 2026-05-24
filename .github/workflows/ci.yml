@@ -17,6 +17,8 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm install
+      - run: npm ci
+      - name: Domain typecheck
+        run: npm run typecheck --workspace=packages/domain
       - name: Domain unit tests
         run: npm run test --workspace=packages/domain

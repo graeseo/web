@@ -1,0 +1,16 @@
+{
+  "name": "@graeseo/domain",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.3",
+    "@vitest/coverage-v8": "^3.2.3",
+    "typescript": "^5.7.3"
+  }
+}

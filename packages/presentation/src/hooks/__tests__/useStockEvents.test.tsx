@@ -35,6 +35,12 @@ class FakeStockEventRepository implements StockEventRepository {
   }
 }
 
+class FakeErrorStockEventRepository implements StockEventRepository {
+  async getAll(): Promise<StockEvent[]> { throw new Error('network error') }
+  async getByFilter(): Promise<StockEvent[]> { throw new Error('network error') }
+  async getById(): Promise<StockEvent | null> { throw new Error('network error') }
+}
+
 const tslaEvent = makeEvent({ id: 'tsla-1', stock: 'tsla' })
 const pltrEvent = makeEvent({ id: 'pltr-1', stock: 'pltr', title: 'AIPCon 5' })
 const macroEvent = makeEvent({ id: 'macro-1', stock: null, title: 'FOMC 6월 회의' })
@@ -84,6 +90,13 @@ describe('useStockEvents', () => {
 
   it('빈 저장소에서는 빈 배열을 반환한다', async () => {
     const repo = new FakeStockEventRepository([])
+    const { result } = renderHook(() => useStockEvents('all'), { wrapper: makeWrapper(repo) })
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(result.current.events).toHaveLength(0)
+  })
+
+  it('저장소에서 에러가 발생하면 isLoading이 false이고 events는 빈 배열이다', async () => {
+    const repo = new FakeErrorStockEventRepository()
     const { result } = renderHook(() => useStockEvents('all'), { wrapper: makeWrapper(repo) })
     await waitFor(() => expect(result.current.isLoading).toBe(false))
     expect(result.current.events).toHaveLength(0)

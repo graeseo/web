@@ -15,11 +15,21 @@ export const useScenario = (eventId: string, stock: StockKey): UseScenarioResult
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     setIsLoading(true)
-    useCase.execute(eventId, stock).then(result => {
-      setScenario(result)
-      setIsLoading(false)
-    })
+
+    ;(async () => {
+      try {
+        const result = await useCase.execute(eventId, stock)
+        if (!cancelled) setScenario(result)
+      } catch {
+        if (!cancelled) setScenario(null)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    })()
+
+    return () => { cancelled = true }
   }, [useCase, eventId, stock])
 
   return { scenario, isLoading }

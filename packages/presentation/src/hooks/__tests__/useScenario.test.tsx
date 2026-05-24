@@ -52,6 +52,11 @@ class FakeScenarioRepository implements ScenarioRepository {
   }
 }
 
+class FakeErrorScenarioRepository implements ScenarioRepository {
+  async getByEventId(): Promise<Scenario | null> { throw new Error('network error') }
+  async getByEventIdForAllStocks(): Promise<Scenario[]> { throw new Error('network error') }
+}
+
 const tslaScenario = makeScenario()
 const pltrScenario = makeScenario({ eventId: 'AIPCon 5', stock: 'pltr' })
 
@@ -102,5 +107,12 @@ describe('useScenario', () => {
     const { result } = renderHook(() => useScenario('테슬라 주주총회', 'tsla'), { wrapper: makeWrapper(repo) })
     await waitFor(() => expect(result.current.isLoading).toBe(false))
     expect(result.current.scenario?.cards).toHaveLength(3)
+  })
+
+  it('저장소에서 에러가 발생하면 isLoading이 false이고 scenario는 null이다', async () => {
+    const repo = new FakeErrorScenarioRepository()
+    const { result } = renderHook(() => useScenario('테슬라 주주총회', 'tsla'), { wrapper: makeWrapper(repo) })
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    expect(result.current.scenario).toBeNull()
   })
 })

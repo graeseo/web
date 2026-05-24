@@ -15,11 +15,21 @@ export const useStockEvents = (filter: EventFilter): UseStockEventsResult => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     setIsLoading(true)
-    useCase.execute(filter).then(result => {
-      setEvents(result)
-      setIsLoading(false)
-    })
+
+    ;(async () => {
+      try {
+        const result = await useCase.execute(filter)
+        if (!cancelled) setEvents(result)
+      } catch {
+        if (!cancelled) setEvents([])
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    })()
+
+    return () => { cancelled = true }
   }, [useCase, filter])
 
   return { events, isLoading }

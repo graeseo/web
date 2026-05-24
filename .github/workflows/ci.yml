@@ -30,3 +30,7 @@ jobs:
         run: npm run typecheck --workspace=packages/presentation
       - name: Presentation unit tests
         run: npm run test --workspace=packages/presentation
+      - name: Mainfeed typecheck
+        run: npm run typecheck --workspace=apps/mainfeed
+      - name: Mainfeed build
+        run: npm run build --workspace=apps/mainfeed

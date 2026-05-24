@@ -1,0 +1,11 @@
+{
+  "name": "@graeseo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@graeseo/domain": "*",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

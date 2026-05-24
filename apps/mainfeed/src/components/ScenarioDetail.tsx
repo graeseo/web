@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { StockEvent, StockKey } from '@graeseo/domain'
 import { useScenario, useScenarios } from '@graeseo/presentation'
 import { ScenarioCardView } from './ScenarioCardView'
@@ -15,11 +15,16 @@ export function ScenarioDetail({ event, onBack }: Props) {
   const { scenarios: allScenarios } = useScenarios(event.id)
   const availableStocks = allScenarios.map(s => s.stock)
 
-  const defaultStock: StockKey = isMacro
-    ? (availableStocks[0] ?? 'tsla')
-    : (event.stock as StockKey)
+  const [activeStock, setActiveStock] = useState<StockKey>(
+    isMacro ? 'tsla' : (event.stock as StockKey),
+  )
 
-  const [activeStock, setActiveStock] = useState<StockKey>(defaultStock)
+  // 비동기로 로드된 availableStocks에 activeStock이 없으면 첫 번째 항목으로 보정
+  useEffect(() => {
+    if (isMacro && availableStocks.length > 0 && !availableStocks.includes(activeStock)) {
+      setActiveStock(availableStocks[0]!)
+    }
+  }, [isMacro, availableStocks, activeStock])
 
   const { scenario, isLoading } = useScenario(event.id, activeStock)
 

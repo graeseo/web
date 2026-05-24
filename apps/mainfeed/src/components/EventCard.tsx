@@ -14,8 +14,18 @@ export function EventCard({ event, onClick }: Props) {
   const stockLabel = event.stock ? event.stock.toUpperCase() : '매크로'
 
   return (
-    <article className="event-card" onClick={onClick} role="button" tabIndex={0}
-      onKeyDown={e => e.key === 'Enter' && onClick()}>
+    <article
+      className="event-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onClick()
+        }
+      }}
+    >
       <div className="event-meta">
         <span className={`event-stock-badge ${event.stock ?? 'macro'}`}>{stockLabel}</span>
         <span className="event-date">{event.date} · D-{event.daysLeft}</span>

@@ -277,6 +277,12 @@ body {
   color: var(--text-secondary);
 }
 
+.stock-picker-btn.active {
+  background: var(--surface-2);
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
 .stock-picker-btn.tsla.active {
   background: var(--tsla-bg);
   border-color: var(--tsla);

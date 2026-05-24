@@ -1,9 +1,11 @@
 import { createContext, useContext } from 'react'
-import type { StockEventRepository, ScenarioRepository } from '@graeseo/domain'
+import type { StockEventRepository, ScenarioRepository, MarketTopicRepository, StockRepository } from '@graeseo/domain'
 
 export interface Repositories {
   stockEventRepository: StockEventRepository
   scenarioRepository: ScenarioRepository
+  marketTopicRepository: MarketTopicRepository
+  stockRepository: StockRepository
 }
 
 export const RepositoryContext = createContext<Repositories | null>(null)

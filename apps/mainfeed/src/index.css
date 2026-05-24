@@ -206,3 +206,186 @@ body {
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
+/* Scenario detail */
+.scenario-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.scenario-detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-btn {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.scenario-detail-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scenario-detail-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.scenario-detail-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* Stock picker (macro events) */
+.stock-picker {
+  display: flex;
+  gap: 8px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.stock-picker-btn {
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--text-secondary);
+}
+
+.stock-picker-btn.tsla.active {
+  background: var(--tsla-bg);
+  border-color: var(--tsla);
+  color: var(--tsla);
+}
+
+.stock-picker-btn.pltr.active {
+  background: var(--pltr-bg);
+  border-color: var(--pltr);
+  color: var(--pltr);
+}
+
+/* Scenario cards */
+.scenario-cards-container {
+  padding: 16px 16px 32px;
+}
+
+.scenario-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scenario-card {
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scenario-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scenario-kind-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.scenario-kind-badge--up {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.scenario-kind-badge--flat {
+  color: var(--text-secondary);
+  background: var(--surface-2);
+}
+
+.scenario-kind-badge--down {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.scenario-probability {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.scenario-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.scenario-oneline {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.scenario-why {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.scenario-signals {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.scenario-signal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.signal-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.signal-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}

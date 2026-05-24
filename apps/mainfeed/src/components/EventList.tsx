@@ -1,8 +1,13 @@
+import type { StockEvent } from '@graeseo/domain'
 import { useActiveFilter, useStockEvents, useAvailableStocks } from '@graeseo/presentation'
 import { FilterTabs } from './FilterTabs'
 import { EventCard } from './EventCard'
 
-export function EventList() {
+interface Props {
+  onSelectEvent: (event: StockEvent) => void
+}
+
+export function EventList({ onSelectEvent }: Props) {
   const { filter, setFilter } = useActiveFilter()
   const { events, isLoading } = useStockEvents(filter)
   const availableStocks = useAvailableStocks()
@@ -16,7 +21,7 @@ export function EventList() {
         <ul className="event-list">
           {events.map(event => (
             <li key={event.id}>
-              <EventCard event={event} />
+              <EventCard event={event} onClick={() => onSelectEvent(event)} />
             </li>
           ))}
         </ul>

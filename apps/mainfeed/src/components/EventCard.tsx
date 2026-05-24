@@ -2,6 +2,7 @@ import type { StockEvent } from '@graeseo/domain'
 
 interface Props {
   event: StockEvent
+  onClick: () => void
 }
 
 const IMPORTANCE_LABEL: Record<StockEvent['importance'], string> = {
@@ -9,11 +10,12 @@ const IMPORTANCE_LABEL: Record<StockEvent['importance'], string> = {
   medium: '관심',
 }
 
-export function EventCard({ event }: Props) {
+export function EventCard({ event, onClick }: Props) {
   const stockLabel = event.stock ? event.stock.toUpperCase() : '매크로'
 
   return (
-    <article className="event-card">
+    <article className="event-card" onClick={onClick} role="button" tabIndex={0}
+      onKeyDown={e => e.key === 'Enter' && onClick()}>
       <div className="event-meta">
         <span className={`event-stock-badge ${event.stock ?? 'macro'}`}>{stockLabel}</span>
         <span className="event-date">{event.date} · D-{event.daysLeft}</span>

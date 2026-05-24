@@ -1,6 +1,5 @@
 import type { EventFilter, StockKey } from '@graeseo/domain'
 
-// 종목 키 → 탭 표시 라벨 변환. 종목 추가 시 이 함수만 수정.
 const toLabel = (stock: StockKey): string => stock.toUpperCase()
 
 interface Props {

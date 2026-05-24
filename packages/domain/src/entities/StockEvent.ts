@@ -6,6 +6,7 @@ export interface StockEvent {
   id: string
   title: string
   date: string
+  day: string
   daysLeft: number
   /** null이면 거시 이벤트 (FOMC, PCE 등) */
   stock: StockKey | null

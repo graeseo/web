@@ -1,17 +1,19 @@
 import { RepositoryContext } from '@graeseo/presentation'
 import {
-  StaticStockEventRepository,
-  StaticScenarioRepository,
-  StaticMarketTopicRepository,
-  StaticStockRepository,
+  HttpStockEventRepository,
+  HttpScenarioRepository,
+  HttpMarketTopicRepository,
+  HttpStockRepository,
 } from '@graeseo/data'
 import { MainFeedPage } from './components/MainFeedPage'
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'
+
 const repositories = {
-  stockEventRepository: new StaticStockEventRepository(),
-  scenarioRepository: new StaticScenarioRepository(),
-  marketTopicRepository: new StaticMarketTopicRepository(),
-  stockRepository: new StaticStockRepository(),
+  stockEventRepository: new HttpStockEventRepository(baseUrl),
+  scenarioRepository: new HttpScenarioRepository(baseUrl),
+  marketTopicRepository: new HttpMarketTopicRepository(baseUrl),
+  stockRepository: new HttpStockRepository(baseUrl),
 }
 
 function App() {

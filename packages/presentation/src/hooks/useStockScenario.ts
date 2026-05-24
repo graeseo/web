@@ -34,7 +34,7 @@ export const useStockScenario = (activeEventId: string, stockKey: StockKey): Use
 
         if (!cancelled) {
           setScenario(sc ?? null)
-          setScenarioEventId(usedId)
+          setScenarioEventId(sc ? usedId : '')
         }
       } catch {
         if (!cancelled) {

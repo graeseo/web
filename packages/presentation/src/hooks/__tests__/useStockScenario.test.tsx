@@ -175,7 +175,7 @@ describe('useStockScenario', () => {
       expect(result.current.scenarioEventId).toBe('pltr-evt-1')
     })
 
-    it('폴백할 종목 이벤트가 없으면 scenario가 null이다', async () => {
+    it('폴백할 종목 이벤트가 없으면 scenario가 null이고 scenarioEventId가 빈 문자열이다', async () => {
       const { result } = renderHook(
         () => useStockScenario('tsla-evt-1', 'pltr'),
         {
@@ -187,9 +187,10 @@ describe('useStockScenario', () => {
       )
       await waitFor(() => expect(result.current.isLoading).toBe(false))
       expect(result.current.scenario).toBeNull()
+      expect(result.current.scenarioEventId).toBe('')
     })
 
-    it('폴백할 이벤트는 있지만 그 이벤트의 시나리오도 없으면 scenario가 null이다', async () => {
+    it('폴백할 이벤트는 있지만 그 이벤트의 시나리오도 없으면 scenario가 null이고 scenarioEventId가 빈 문자열이다', async () => {
       const { result } = renderHook(
         () => useStockScenario('tsla-evt-1', 'pltr'),
         {
@@ -201,6 +202,7 @@ describe('useStockScenario', () => {
       )
       await waitFor(() => expect(result.current.isLoading).toBe(false))
       expect(result.current.scenario).toBeNull()
+      expect(result.current.scenarioEventId).toBe('')
     })
 
     it('종목 이벤트가 여러 개면 첫 번째 이벤트의 시나리오로 폴백한다', async () => {

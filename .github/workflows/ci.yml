@@ -18,6 +18,19 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run lint
-      - run: npm test -- --run
-      - run: npm run build
+      - name: Domain typecheck
+        run: npm run typecheck --workspace=packages/domain
+      - name: Domain unit tests
+        run: npm run test --workspace=packages/domain
+      - name: Data typecheck
+        run: npm run typecheck --workspace=packages/data
+      - name: Data unit tests
+        run: npm run test --workspace=packages/data
+      - name: Presentation typecheck
+        run: npm run typecheck --workspace=packages/presentation
+      - name: Presentation unit tests
+        run: npm run test --workspace=packages/presentation
+      - name: Mainfeed typecheck
+        run: npm run typecheck --workspace=apps/mainfeed
+      - name: Mainfeed build
+        run: npm run build --workspace=apps/mainfeed

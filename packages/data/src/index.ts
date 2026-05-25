@@ -1,0 +1,8 @@
+export { StaticStockEventRepository } from './repositories/StaticStockEventRepository'
+export { StaticScenarioRepository } from './repositories/StaticScenarioRepository'
+export { StaticMarketTopicRepository } from './repositories/StaticMarketTopicRepository'
+export { StaticStockRepository } from './repositories/StaticStockRepository'
+export { HttpStockEventRepository } from './repositories/HttpStockEventRepository'
+export { HttpScenarioRepository } from './repositories/HttpScenarioRepository'
+export { HttpMarketTopicRepository } from './repositories/HttpMarketTopicRepository'
+export { HttpStockRepository } from './repositories/HttpStockRepository'

@@ -7,7 +7,11 @@ import {
 } from '@graeseo/data'
 import { MainFeedPage } from './components/MainFeedPage'
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL ?? ''
+const baseUrl = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')
+
+if (import.meta.env.PROD && !baseUrl) {
+  throw new Error('VITE_API_BASE_URL must be set in production')
+}
 
 const repositories = {
   stockEventRepository: new HttpStockEventRepository(baseUrl),

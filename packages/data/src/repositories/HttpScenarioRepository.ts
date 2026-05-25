@@ -4,7 +4,7 @@ export class HttpScenarioRepository implements ScenarioRepository {
   constructor(private readonly baseUrl: string) {}
 
   async getByEventId(eventId: string, stock: StockKey): Promise<Scenario | null> {
-    const res = await fetch(`${this.baseUrl}/api/scenarios?eventId=${encodeURIComponent(eventId)}&stock=${stock}`)
+    const res = await fetch(`${this.baseUrl}/api/scenarios?eventId=${encodeURIComponent(eventId)}&stock=${encodeURIComponent(stock)}`)
     if (res.status === 404) return null
     if (!res.ok) throw new Error(`scenario fetch failed: ${res.status}`)
     return res.json()

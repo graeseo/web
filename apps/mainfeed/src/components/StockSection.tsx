@@ -20,7 +20,9 @@ export function StockSection({ stockKey, activeEventId }: Props) {
   return (
     <section className="stock-section">
       <div className="stock-sticky-header">
-        <div className="stock-mark">{stock.mark}</div>
+        <div className="stock-mark">
+          <StockLogo stockKey={stockKey} mark={stock.mark} />
+        </div>
         <div>
           <div className="stock-name">{stock.name}</div>
           <div className="stock-ticker">{stock.ticker}</div>
@@ -85,8 +87,8 @@ function ScenarioCardItem({ card, index }: ScenarioCardItemProps) {
       <p className="scenario-why-text">{card.why}</p>
       <div className="card-sub-label">지금 보이는 신호</div>
       <div className="signals-list">
-        {card.signals.map(sig => (
-          <SignalItem key={sig.title} signal={sig} />
+        {card.signals.map((sig, i) => (
+          <SignalItem key={sig.title} signal={sig} index={i + 1} />
         ))}
       </div>
       <div className="prob-footer">
@@ -99,16 +101,38 @@ function ScenarioCardItem({ card, index }: ScenarioCardItemProps) {
 
 interface SignalItemProps {
   signal: ScenarioSignal
+  index: number
 }
 
-function SignalItem({ signal }: SignalItemProps) {
+function SignalItem({ signal, index }: SignalItemProps) {
   return (
     <div className="signal-item">
+      <span className="signal-num">{index}</span>
       <div>
         <div className="signal-title">{signal.title}</div>
         <div className="signal-desc">{signal.description}</div>
       </div>
     </div>
+  )
+}
+
+const STOCK_LOGO_DOMAINS: Record<string, string> = {
+  tsla: 'tesla.com',
+  pltr: 'palantir.com',
+}
+
+function StockLogo({ stockKey, mark }: { stockKey: string; mark: string }) {
+  const domain = STOCK_LOGO_DOMAINS[stockKey]
+  if (!domain) return <span>{mark}</span>
+  return (
+    <img
+      src={`https://logo.clearbit.com/${domain}`}
+      alt={stockKey}
+      width={28}
+      height={28}
+      style={{ borderRadius: 6, objectFit: 'contain', background: '#fff' }}
+      onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; (e.currentTarget.nextSibling as HTMLElement).style.display = 'block' }}
+    />
   )
 }
 

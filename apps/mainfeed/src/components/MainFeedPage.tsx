@@ -13,13 +13,13 @@ function getNextUpdateInfo() {
   const m = kstNow.getMinutes()
   const totalMin = h * 60 + m
 
-  const schedules = [0, 18 * 60] // 00:00, 18:00 KST
-  const nextMin = schedules.find(s => s > totalMin) ?? schedules[0] + 24 * 60
+  const schedules: number[] = [0, 18 * 60] // 00:00, 18:00 KST
+  const nextMin = schedules.find(s => s > totalMin) ?? (schedules[0]! + 24 * 60)
   const diffMin = nextMin - totalMin
   const diffH = Math.floor(diffMin / 60)
   const diffM = diffMin % 60
 
-  const lastMin = [...schedules].reverse().find(s => s <= totalMin) ?? schedules[schedules.length - 1]
+  const lastMin = [...schedules].reverse().find(s => s <= totalMin) ?? schedules[schedules.length - 1]!
   const lastH = Math.floor(lastMin / 60)
   const lastM = lastMin % 60
   const lastStr = `${String(lastH).padStart(2, '0')}:${String(lastM).padStart(2, '0')}`

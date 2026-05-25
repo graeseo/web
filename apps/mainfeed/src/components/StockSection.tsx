@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { StockKey, ScenarioCard, ScenarioSignal, ScenarioDirection } from '@graeseo/domain'
 import { useStocks, useStockScenario } from '@graeseo/presentation'
 
@@ -122,8 +123,9 @@ const STOCK_LOGO_DOMAINS: Record<string, string> = {
 }
 
 function StockLogo({ stockKey, mark }: { stockKey: string; mark: string }) {
+  const [error, setError] = useState(false)
   const domain = STOCK_LOGO_DOMAINS[stockKey]
-  if (!domain) return <span>{mark}</span>
+  if (!domain || error) return <span>{mark}</span>
   return (
     <img
       src={`https://logo.clearbit.com/${domain}`}
@@ -131,7 +133,7 @@ function StockLogo({ stockKey, mark }: { stockKey: string; mark: string }) {
       width={28}
       height={28}
       style={{ borderRadius: 6, objectFit: 'contain', background: '#fff' }}
-      onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; (e.currentTarget.nextSibling as HTMLElement).style.display = 'block' }}
+      onError={() => setError(true)}
     />
   )
 }

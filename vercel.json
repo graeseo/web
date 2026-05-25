@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build --workspace=apps/mainfeed",
+  "outputDirectory": "apps/mainfeed/dist",
+  "installCommand": "npm install",
+  "framework": null
+}

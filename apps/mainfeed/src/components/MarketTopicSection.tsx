@@ -50,12 +50,20 @@ function ImplicationRow({ implication, stockName }: ImplicationRowProps) {
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span className="implication-stock-name">{stockName}</span>
-          <span className={`implication-verdict ${dir}`}>{implication.verdict}</span>
+          <span className={`implication-verdict ${dir}`}>{strengthToLabel(implication.strength)}</span>
         </div>
-        <p className="implication-note">{implication.note}</p>
+        <p className="implication-note">{implication.verdict}. {implication.note}</p>
       </div>
     </div>
   )
+}
+
+function strengthToLabel(strength: number): string {
+  if (strength >= 2) return '강한 호재'
+  if (strength === 1) return '호재'
+  if (strength === 0) return '중립'
+  if (strength === -1) return '약세'
+  return '강한 약세'
 }
 
 function strengthToDir(strength: number): 'up' | 'flat' | 'down' {

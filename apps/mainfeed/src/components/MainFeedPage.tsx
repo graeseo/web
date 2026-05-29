@@ -40,7 +40,7 @@ export function MainFeedPage() {
   const [refreshKey, setRefreshKey] = useState(0)
 
   const isLoading = topicLoading || stocksLoading || eventsLoading
-  const hasError = !isLoading && events.length === 0 && stocks.length === 0
+  const hasError = !isLoading && events.length === 0 && stocks.length === 0 && !marketTopic
 
   const firstStockEvent = useMemo(() => events.find(e => e.stock) ?? events[0] ?? null, [events])
   const [activeEventId, setActiveEventId] = useState<string | null>(null)

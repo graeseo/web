@@ -22,7 +22,9 @@ function getNextUpdateInfo() {
   const lastMin = [...schedules].reverse().find(s => s <= totalMin) ?? schedules[schedules.length - 1]!
   const lastH = Math.floor(lastMin / 60)
   const lastM = lastMin % 60
-  const lastStr = `${String(lastH).padStart(2, '0')}:${String(lastM).padStart(2, '0')}`
+  const mo = kstNow.getMonth() + 1
+  const d = lastMin === 0 && totalMin < 60 ? kstNow.getDate() : kstNow.getDate()
+  const lastStr = `${mo}/${d} ${String(lastH).padStart(2, '0')}:${String(lastM).padStart(2, '0')}`
 
   return {
     lastStr,
@@ -31,11 +33,14 @@ function getNextUpdateInfo() {
 }
 
 export function MainFeedPage() {
-  const { marketTopic } = useMarketTopic()
-  const { stockOrder } = useStocks()
+  const { marketTopic, isLoading: topicLoading } = useMarketTopic()
+  const { stocks, stockOrder, isLoading: stocksLoading } = useStocks()
   const [filter, setFilter] = useState<EventFilter>('all')
-  const { events } = useStockEvents(filter)
+  const { events, isLoading: eventsLoading } = useStockEvents(filter)
   const [refreshKey, setRefreshKey] = useState(0)
+
+  const isLoading = topicLoading || stocksLoading || eventsLoading
+  const hasError = !isLoading && events.length === 0 && stocks.length === 0
 
   const firstStockEvent = useMemo(() => events.find(e => e.stock) ?? events[0] ?? null, [events])
   const [activeEventId, setActiveEventId] = useState<string | null>(null)
@@ -57,11 +62,11 @@ export function MainFeedPage() {
   const THRESHOLD = 72
 
   const onTouchStart = (e: React.TouchEvent) => {
-    if (window.scrollY === 0) touchStartY.current = e.touches[0].clientY
+    if (window.scrollY === 0) touchStartY.current = e.touches[0]!.clientY
   }
   const onTouchMove = (e: React.TouchEvent) => {
     if (touchStartY.current === 0) return
-    const dist = e.touches[0].clientY - touchStartY.current
+    const dist = e.touches[0]!.clientY - touchStartY.current
     if (dist > 0) {
       setPulling(true)
       setPullDist(Math.min(dist, THRESHOLD + 20))
@@ -107,24 +112,53 @@ export function MainFeedPage() {
         <span className="update-next">다음 갱신 {countdown}</span>
       </div>
 
-      {marketTopic && <MarketTopicSection topic={marketTopic} />}
+      {isLoading && <LoadingState />}
 
-      <TimelineSection
-        filter={filter}
-        onFilterChange={handleFilterChange}
-        activeEventId={activeEvent?.id ?? null}
-        onSelectEvent={setActiveEventId}
-        events={events}
-        activeEvent={activeEvent}
-      />
+      {hasError && (
+        <ErrorState onRetry={() => window.location.reload()} />
+      )}
 
-      {stockOrder.map(stockKey => (
-        <StockSection
-          key={`${stockKey}-${refreshKey}`}
-          stockKey={stockKey}
-          activeEventId={activeEvent?.id ?? null}
-        />
-      ))}
+      {!isLoading && !hasError && (
+        <>
+          {marketTopic && <MarketTopicSection topic={marketTopic} />}
+
+          <TimelineSection
+            filter={filter}
+            onFilterChange={handleFilterChange}
+            activeEventId={activeEvent?.id ?? null}
+            onSelectEvent={setActiveEventId}
+            events={events}
+            activeEvent={activeEvent}
+          />
+
+          {stockOrder.map(stockKey => (
+            <StockSection
+              key={`${stockKey}-${refreshKey}`}
+              stockKey={stockKey}
+              activeEventId={activeEvent?.id ?? null}
+            />
+          ))}
+        </>
+      )}
+    </div>
+  )
+}
+
+function LoadingState() {
+  return (
+    <div className="feed-loading">
+      <div className="loading-dot" />
+      <div className="loading-dot" />
+      <div className="loading-dot" />
+    </div>
+  )
+}
+
+function ErrorState({ onRetry }: { onRetry: () => void }) {
+  return (
+    <div className="feed-error">
+      <p className="feed-error-msg">데이터를 불러오지 못했어요</p>
+      <button className="retry-btn" onClick={onRetry}>다시 시도</button>
     </div>
   )
 }
